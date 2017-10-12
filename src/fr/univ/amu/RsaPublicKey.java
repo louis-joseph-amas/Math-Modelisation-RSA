@@ -1,15 +1,16 @@
 package fr.univ.amu;
 
 import java.io.*;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RsaPublicKey implements Serializable {
 
     private String name;
-    private int e,n;//public key
+    private BigInteger e,n;//public key
 
-    RsaPublicKey(String name, int e, int n) {
+    RsaPublicKey(String name, BigInteger e, BigInteger n) {
         this.name = name;
         this.e = e;
         this.n = n;
@@ -40,30 +41,29 @@ public class RsaPublicKey implements Serializable {
     }
 
 
-    public int getN() {
+    public BigInteger getN() {
         return n;
     }
 
 
-    public static List<Integer> encode(String message) {
-        List<Integer> tabChar = new ArrayList<Integer>();
+    public List<BigInteger> encode(String message) {
+        List<BigInteger> tabChar = new ArrayList<BigInteger>();
         for (Character c : message.toCharArray()) {
-            tabChar.add((int) c);
+            tabChar.add(new BigInteger(String.valueOf((long) c)));
         }
         return tabChar;
     }
-    public static String decode(List<Integer> codePointTab) {
+    public String decode(List<BigInteger> codePointTab) {
         StringBuilder stringOut = new StringBuilder();
-        for (Integer i : codePointTab) {
-
-            stringOut.appendCodePoint(i);
+        for (BigInteger i : codePointTab) {
+            stringOut.appendCodePoint(i.intValue());
         }
         return stringOut.toString();
     }
 
-    public List<Integer> encrypt(List<Integer> codePointTab) {
-        List<Integer> tabChar = new ArrayList<Integer>();
-        for (Integer i : codePointTab) {
+    public List<BigInteger> encrypt(List<BigInteger> codePointTab) {
+        List<BigInteger> tabChar = new ArrayList<BigInteger>();
+        for (BigInteger i : codePointTab) {
             tabChar.add(RsaMath.modularPow(i,e,n));
         }
         return tabChar;

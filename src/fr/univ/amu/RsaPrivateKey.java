@@ -2,12 +2,13 @@ package fr.univ.amu;
 
 
 import java.io.*;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RsaPrivateKey extends RsaPublicKey{
 
-    private int d;//private key
+    private BigInteger d;//private key
 
     @Override
     public RsaPrivateKey loadKey(String path) {
@@ -35,22 +36,22 @@ public class RsaPrivateKey extends RsaPublicKey{
         return false;
     }
 
-    public RsaPrivateKey(String name, int e, int n, int d) {
+    public RsaPrivateKey(String name, BigInteger e, BigInteger n, BigInteger d) {
         super(name,e,n);
 
         this.d = d;
     }
 
-    public  List<Integer> decrypt(List<Integer> codePointTab) {
-        List<Integer> tabChar = new ArrayList<Integer>();
-        for (Integer i : codePointTab) {
+    public  List<BigInteger> decrypt(List<BigInteger> codePointTab) {
+        List<BigInteger> tabChar = new ArrayList<BigInteger>();
+        for (BigInteger i : codePointTab) {
             tabChar.add(RsaMath.modularPow(i,d,super.getN()));
         }
         return tabChar;
     }
 
 
-    public int getD() {
+    public BigInteger getD() {
         return d;
     }
 

@@ -7,62 +7,41 @@ import java.math.BigInteger;
 public class RsaKeyGenerator {
 
     private String name;
-    private int size,p,q,fi,n,e,d;
 
-    private int generateD() {
+    int size;
+    private BigInteger p,q,fi,n,e,d;
+
+    private BigInteger generateD() {
         BigInteger E = new BigInteger(""+e);
         BigInteger PHI = new BigInteger(""+fi);
-        return E.modInverse(PHI).intValue();//euclidExtended(e, fi) % fi;
+        return E.modInverse(PHI);//euclidExtended(e, fi) % fi;
     }
 
 
 
-    private int generateE() {
-        int e;
+    private BigInteger generateE() {
+        BigInteger e;
+
         while (true) {
-            e = RsaMath.randNumber(size,size+size);
-            if (RsaMath.GCD(e, fi) == 1)
+            e = RsaMath.randNumber(size);
+            if (RsaMath.GCD(e, fi).compareTo(BigInteger.ONE) == 0)
                 break;
         }
         return e;
     }
 
-    private int euclidExtended(int a,int b) {
-        int r,u,v,r2,u2,v2,qu;
-        r = a;
-        u = 1;
-        v = 0;
-        r2 = b;
-        u2 = 0;
-        v2 = 1;
-        qu = 0;
-        while (r2 != 0) {
-            qu = r / r2;
-            r = r2;
-            u = u2;
-            v = v2;
-            r2 = r - qu * r2;
-            u2 = u - qu * u2;
-            v2 = v - qu * v2;
-        }
-        return u;
-     }
+
 
     public void generateKeys() {
-
         p = RsaMath.generateRandomPrime(size);
-
         while (true) {
             q = RsaMath.generateRandomPrime(size);
             if (p != q)
                 break;
         }
-        n = p * q;
-
-        fi = (p - 1) * (q - 1);
-
+        n = p.multiply(q);
+        fi = (p.subtract((BigInteger.ONE))).multiply (q.subtract(BigInteger.ONE));
         e = generateE();
-
         d = generateD();
 
 

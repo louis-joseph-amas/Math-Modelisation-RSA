@@ -6,11 +6,9 @@ import java.util.Map;
 public class Main {
 
     public static void main(String[] args){
-
-        RsaKeyGenerator gen = new RsaKeyGenerator(100,"Louis AMAS");
-        RsaPrivateKey privat = gen.getPrivateKey();
-        System.out.println(gen.toString());
-        System.out.println(privat.toString());
-        System.out.println(privat.loadKey("enzorg.rsa").toString());
+        RsaKeyGenerator rsaKeyGenerator = new RsaKeyGenerator(15,"Louis AMAS");
+        RsaPrivateKey privateKey = rsaKeyGenerator.getPrivateKey();
+        System.out.println(rsaKeyGenerator);
+        System.out.println(privateKey.decode(privateKey.decrypt(privateKey.encrypt(privateKey.encode("Salut")))));
     }
 }
