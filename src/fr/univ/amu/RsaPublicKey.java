@@ -46,30 +46,13 @@ public class RsaPublicKey implements Serializable {
     }
 
 
-    public List<BigInteger> encode(String message) {
-        List<BigInteger> tabChar = new ArrayList<BigInteger>();
-        for (Character c : message.toCharArray()) {
-            tabChar.add(new BigInteger(String.valueOf((long) c)));
-        }
-        return tabChar;
-    }
-    public String decode(List<BigInteger> codePointTab) {
-        StringBuilder stringOut = new StringBuilder();
-        for (BigInteger i : codePointTab) {
-            stringOut.appendCodePoint(i.intValue());
-        }
-        return stringOut.toString();
-    }
 
-    public List<BigInteger> encrypt(List<BigInteger> codePointTab) {
-        List<BigInteger> tabChar = new ArrayList<BigInteger>();
-        for (BigInteger i : codePointTab) {
-            tabChar.add(RsaMath.modularPow(i,e,n));
-        }
-        return tabChar;
-    }
     @Override
     public String toString() {
         return "Public Key of " + name + " e= "+ e + " n= " + n;
+    }
+
+    public BigInteger getE() {
+        return e;
     }
 }

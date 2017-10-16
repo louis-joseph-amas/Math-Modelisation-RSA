@@ -42,14 +42,6 @@ public class RsaPrivateKey extends RsaPublicKey{
         this.d = d;
     }
 
-    public  List<BigInteger> decrypt(List<BigInteger> codePointTab) {
-        List<BigInteger> tabChar = new ArrayList<BigInteger>();
-        for (BigInteger i : codePointTab) {
-            tabChar.add(RsaMath.modularPow(i,d,super.getN()));
-        }
-        return tabChar;
-    }
-
 
     public BigInteger getD() {
         return d;
