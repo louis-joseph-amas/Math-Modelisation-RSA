@@ -5,16 +5,16 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Encryptor {
+class Encryptor {
 
-    public static List<BigInteger> encode(String message) {
+    static List<BigInteger> encode(String message) {
         List<BigInteger> tabChar = new ArrayList<BigInteger>();
         for (Character c : message.toCharArray()) {
             tabChar.add(new BigInteger(String.valueOf((long) c)));
         }
         return tabChar;
     }
-    public static String decode(List<BigInteger> codePointTab) {
+    static String decode(List<BigInteger> codePointTab) {
         StringBuilder stringOut = new StringBuilder();
         try {
             for (BigInteger i : codePointTab) {
@@ -56,7 +56,7 @@ public class Encryptor {
         return decode(list);
     }
     
-    public static boolean encryptMessageInFile(String path, String message, RsaPublicKey publicKey) {
+    static boolean encryptMessageInFile(String path, String message, RsaPublicKey publicKey) {
         try(FileOutputStream fileOutputStream = new FileOutputStream(path);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
             objectOutputStream.writeObject(encryptMessage(message,publicKey));
@@ -68,7 +68,7 @@ public class Encryptor {
         }
         return false;
     }
-    public static String decryptMessageOfFile(String path, RsaPrivateKey rsaPrivateKey) {
+    static String decryptMessageOfFile(String path, RsaPrivateKey rsaPrivateKey) {
         try(FileInputStream fileInputStream = new FileInputStream(path);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
             return decryptMessage( (List<BigInteger>) objectInputStream.readObject(),rsaPrivateKey);
