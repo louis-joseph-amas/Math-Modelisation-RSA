@@ -19,14 +19,14 @@ public class RsaPublicKey implements Serializable {
     }
 
 
-    public static RsaPublicKey loadKey(String path) {
+    static RsaPublicKey loadKey(String path) {
         try (FileInputStream fileInputStream = new FileInputStream(path);
              ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)
         ) {
             return (RsaPublicKey) objectInputStream.readObject();
-        } catch (IOException e1) {
+        }catch (ClassNotFoundException e1) {
             e1.printStackTrace();
-        } catch (ClassNotFoundException e1) {
+        } catch (IOException e1) {
             e1.printStackTrace();
         }
         return null;
