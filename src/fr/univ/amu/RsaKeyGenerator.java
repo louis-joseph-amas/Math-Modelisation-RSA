@@ -8,7 +8,7 @@ public class RsaKeyGenerator {
 
     private String name;
 
-    int size;
+    private int size;
     private BigInteger p,q,fi,n,e,d;
 
     private BigInteger generateD() {
@@ -16,14 +16,24 @@ public class RsaKeyGenerator {
         BigInteger PHI = new BigInteger(""+fi);
         return E.modInverse(PHI);//euclidExtended(e, fi) % fi;
     }
+    public RsaKeyGenerator(BigInteger p, BigInteger q, BigInteger e) {
+        this.p = p;
+        this.q = q;
+        this.e = e;
+        this.name = "Hacked key";
+        generateN();
+        getFi();
 
+        d = generateD();
+
+    }
 
 
     private BigInteger generateE() {
         BigInteger e;
 
         while (true) {
-            e = RsaMath.randNumber(size);
+            e = RsaMath.randNumber(p.bitLength());
             if (RsaMath.GCD(e, fi).compareTo(BigInteger.ONE) == 0)
                 break;
         }
@@ -33,27 +43,36 @@ public class RsaKeyGenerator {
 
 
     public void generateKeys() {
-        p = RsaMath.generateRandomPrime(size);
+
+        p = RsaMath.generateRandomPrime(size /2);
         while (true) {
-            q = RsaMath.generateRandomPrime(size);
-            if (p != q)
+            q = RsaMath.generateRandomPrime(size /2);
+            if (!p.equals(q) && p.multiply(q).bitLength()  != size -1)
                 break;
         }
-        n = p.multiply(q);
-        fi = (p.subtract((BigInteger.ONE))).multiply (q.subtract(BigInteger.ONE));
+        generateN();
+        getFi();
         e = generateE();
         d = generateD();
+        System.out.println("P" + p+ " Q = " + q);
 
+    }
 
+    private void generateN() {
+        n = p.multiply(q);
+    }
+
+    private void getFi() {
+        fi = (p.subtract((BigInteger.ONE))).multiply (q.subtract(BigInteger.ONE));
     }
 
 
     public RsaPublicKey getPublicKey() {
-        return new RsaPublicKey(name,e,n);
+        return new RsaPublicKey(name,e,n,size);
     }
 
     public RsaPrivateKey getPrivateKey() {
-        return new RsaPrivateKey(name,e,n,d);
+        return new RsaPrivateKey(name,e,n,size,d);
     }
 
     public RsaKeyGenerator(int size,String name) {

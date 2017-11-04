@@ -10,8 +10,7 @@ public class RsaPrivateKey extends RsaPublicKey{
 
     private BigInteger d;//private key
 
-    @Override
-    public RsaPrivateKey loadKey(String path) {
+    public static RsaPrivateKey loadKey(String path) {
         try (FileInputStream fileInputStream = new FileInputStream(path);
              ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)
         ) {
@@ -26,7 +25,7 @@ public class RsaPrivateKey extends RsaPublicKey{
 
     @Override
     public boolean saveKey(String path) {
-        try(FileOutputStream fileOutputStream = new FileOutputStream(path);
+        try(FileOutputStream fileOutputStream = new FileOutputStream(path + ".prv");
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
             objectOutputStream.writeObject(this);
             return true;
@@ -36,8 +35,8 @@ public class RsaPrivateKey extends RsaPublicKey{
         return false;
     }
 
-    public RsaPrivateKey(String name, BigInteger e, BigInteger n, BigInteger d) {
-        super(name,e,n);
+    public RsaPrivateKey(String name, BigInteger e, BigInteger n,int size, BigInteger d) {
+        super(name,e,n,size);
 
         this.d = d;
     }
@@ -49,7 +48,8 @@ public class RsaPrivateKey extends RsaPublicKey{
 
     @Override
     public String toString() {
-        return super.toString() + " and private key : d = " + d;
+
+        return "Private key of" + super.getName() + " size[" + super.getSize() + "].";
     }
 
 

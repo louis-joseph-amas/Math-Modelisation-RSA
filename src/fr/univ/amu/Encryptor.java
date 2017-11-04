@@ -16,9 +16,15 @@ public class Encryptor {
     }
     public static String decode(List<BigInteger> codePointTab) {
         StringBuilder stringOut = new StringBuilder();
-        for (BigInteger i : codePointTab) {
-            stringOut.appendCodePoint(i.intValue());
+        try {
+            for (BigInteger i : codePointTab) {
+                stringOut.appendCodePoint(i.intValue());
+            }
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            return "Clé invalide";
         }
+
         return stringOut.toString();
     }
 
@@ -39,13 +45,13 @@ public class Encryptor {
         return tabChar;
     }
 
-    public static List<BigInteger> encryptMessage(String str,RsaPublicKey rsaPublicKey) {
+    private static List<BigInteger> encryptMessage(String str,RsaPublicKey rsaPublicKey) {
         List<BigInteger> list = encode(str);
         list = encrypt(list,rsaPublicKey);
         return list;
     }
 
-    public static String decryptMessage(List<BigInteger> encryptedCodePoint,RsaPrivateKey rsaPrivateKey) {
+    private static String decryptMessage(List<BigInteger> encryptedCodePoint,RsaPrivateKey rsaPrivateKey) {
         List<BigInteger> list = decrypt(encryptedCodePoint,rsaPrivateKey);
         return decode(list);
     }

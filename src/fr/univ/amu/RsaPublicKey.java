@@ -8,20 +8,22 @@ import java.util.List;
 public class RsaPublicKey implements Serializable {
 
     private String name;
+    private int size;
     private BigInteger e,n;//public key
 
-    RsaPublicKey(String name, BigInteger e, BigInteger n) {
+    RsaPublicKey(String name, BigInteger e, BigInteger n,int size) {
         this.name = name;
         this.e = e;
         this.n = n;
+        this.size = size;
     }
 
 
-    public RsaPublicKey loadKey(String path) {
+    public static RsaPublicKey loadKey(String path) {
         try (FileInputStream fileInputStream = new FileInputStream(path);
              ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)
         ) {
-            return (RsaPrivateKey) objectInputStream.readObject();
+            return (RsaPublicKey) objectInputStream.readObject();
         } catch (IOException e1) {
             e1.printStackTrace();
         } catch (ClassNotFoundException e1) {
@@ -30,7 +32,7 @@ public class RsaPublicKey implements Serializable {
         return null;
     }
     public boolean saveKey(String path) {
-        try(FileOutputStream fileOutputStream = new FileOutputStream(path);
+        try(FileOutputStream fileOutputStream = new FileOutputStream(path + ".pub");
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
             objectOutputStream.writeObject(this);
             return true;
@@ -49,10 +51,18 @@ public class RsaPublicKey implements Serializable {
 
     @Override
     public String toString() {
-        return "Public Key of " + name + " e= "+ e + " n= " + n;
+        return "Public Key of " + name + " size[" +size+"].";
     }
 
     public BigInteger getE() {
         return e;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getSize() {
+        return size;
     }
 }

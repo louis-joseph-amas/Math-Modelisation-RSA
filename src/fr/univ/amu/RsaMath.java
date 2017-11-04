@@ -1,6 +1,8 @@
 package fr.univ.amu;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -30,6 +32,21 @@ public class RsaMath {
             return number1;
         }
         return GCD(number2, number1.mod( number2));
+    }
+    private static boolean isIntegerValue(BigDecimal bd) {
+        return bd.signum() == 0 || bd.scale() <= 0 || bd.stripTrailingZeros().scale() <= 0;
+    }
+    static RsaPrivateKey crack(RsaPublicKey rsaPublicKey) {
+        BigDecimal N = new BigDecimal(rsaPublicKey.getN());
+        BigDecimal i = new BigDecimal("2");
+        while (true) {
+            BigDecimal division = N.divide(i, 2,BigDecimal.ROUND_HALF_UP);
+            if (isIntegerValue(division)) {
+                RsaKeyGenerator rsaKeyGenerator = new RsaKeyGenerator(i.toBigInteger(),division.toBigInteger(),rsaPublicKey.getE());
+                return rsaKeyGenerator.getPrivateKey();
+            }
+            i = i.add(BigDecimal.ONE);
+        }
     }
 
     public static BigInteger generateRandomPrime(int size) {
