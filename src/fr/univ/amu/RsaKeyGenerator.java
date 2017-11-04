@@ -34,7 +34,8 @@ public class RsaKeyGenerator {
 
         while (true) {
             e = RsaMath.randNumber(p.bitLength());
-            if (RsaMath.GCD(e, fi).compareTo(BigInteger.ONE) == 0)
+            if (RsaMath.GCD(e, fi).compareTo(BigInteger.ONE) == 0 &&
+                e.compareTo(fi) < 0)
                 break;
         }
         return e;
