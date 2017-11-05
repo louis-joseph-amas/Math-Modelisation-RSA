@@ -56,17 +56,15 @@ class Encryptor {
         return decode(list);
     }
     
-    static boolean encryptMessageInFile(String path, String message, RsaPublicKey publicKey) {
+    static void encryptMessageInFile(String path, String message, RsaPublicKey publicKey) {
         try(FileOutputStream fileOutputStream = new FileOutputStream(path);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
             objectOutputStream.writeObject(encryptMessage(message,publicKey));
-            return true;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return false;
     }
     static String decryptMessageOfFile(String path, RsaPrivateKey rsaPrivateKey) {
         try(FileInputStream fileInputStream = new FileInputStream(path);

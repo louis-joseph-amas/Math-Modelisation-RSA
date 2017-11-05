@@ -40,11 +40,11 @@ public class Main {
             switch (i) {
                 case 0:
                     user.addRsaPrivateKeyFromFile(User.askForPath());
-                    System.out.println("Clé privé bien chargé");
+                    System.out.println("Clé privée bien chargée");
                     break;
                 case 1:
                     user.addRsaPublicKeyFromFIle(User.askForPath());
-                    System.out.println("Clé publique bien chargé");
+                    System.out.println("Clé publique bien chargée");
                     break;
                 case 2:
                     RsaPublicKey rsaPublicKey = chooseFromExistingKey(user.getRsaPublicKeys());
@@ -57,7 +57,7 @@ public class Main {
                     System.out.println(Encryptor.decryptMessageOfFile(path,rsaPrivateKey));
                     break;
                 case 4:
-                    System.out.println("Choisr une taille en bit 1024 conseillé : ");
+                    System.out.println("Choisir une taille en bit: ");
                     int size = User.userInput();
                     System.out.println("Demander un nom :");
                     String nom = User.askForString();
@@ -72,7 +72,7 @@ public class Main {
                         System.out.println("Pour la clé privée");
                         pathPrivate = User.askForPath();
                         rsaKeyGenerator.getPrivateKey().saveKey(pathPrivate);
-                        System.out.println("Clé bien enregistré");
+                        System.out.println("Clé bien enregistrée");
                     }
                     break;
                 case 5:
@@ -80,7 +80,7 @@ public class Main {
                     System.out.println("Les clés privées chargées sont \n" + user.getRsaPrivateKeys());
                     break;
                 case 6:
-                    System.out.println("Choisir une clé publique a craqué");
+                    System.out.println("Choisir une clé publique a craquée");
                     user.addRsaPrivateKey(RsaMath.crack(chooseFromExistingKey(user.getRsaPublicKeys())));
 
                     break;
