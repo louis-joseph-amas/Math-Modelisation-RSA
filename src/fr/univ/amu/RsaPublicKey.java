@@ -51,7 +51,7 @@ public class RsaPublicKey implements Serializable {
 
     @Override
     public String toString() {
-        return "Public Key of " + name + " size[" +size+"].";
+        return "Clé publique de " + name + " taille[" +size+"].";
     }
 
     public BigInteger getE() {

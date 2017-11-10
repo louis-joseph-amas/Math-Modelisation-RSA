@@ -34,7 +34,7 @@ public class Main {
                                "| [3] Déchiffrer un message      |\n" +
                                "| [4] Générer des clés           |\n" +
                                "| [5] Afficher les clés chargées |\n" +
-                               "| [6] Cracker une clé            |\n" +
+                               "| [6] Craquer une clé            |\n" +
                                "----------------------------------");
             int i = User.userInput();
             switch (i) {
@@ -48,7 +48,7 @@ public class Main {
                     break;
                 case 2:
                     RsaPublicKey rsaPublicKey = chooseFromExistingKey(user.getRsaPublicKeys());
-                    System.out.println("Ou voulez vous le chiffrer");
+                    System.out.println("Oû voulez vous le chiffrer");
                     Encryptor.encryptMessageInFile(User.askForPath(),user.getMessage(),rsaPublicKey);
                     break;
                 case 3:

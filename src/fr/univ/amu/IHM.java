@@ -181,8 +181,8 @@ public class IHM extends Application {
         HBox hBox = new HBox();
         hBox.setSpacing(5);
         hBox.getChildren().addAll(path,button);
-        vBox.getChildren().addAll(text,textField,text1,textField1,textPaht,hBox,button1);
-        return new Scene(vBox,300,300);
+        vBox.getChildren().addAll(text,textField,text1,textField1,textPaht,hBox,button1,buttonRet);
+        return new Scene(vBox,400,400);
     }
 
     @Override

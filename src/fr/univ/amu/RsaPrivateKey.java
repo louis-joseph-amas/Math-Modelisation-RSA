@@ -49,7 +49,7 @@ public class RsaPrivateKey extends RsaPublicKey{
     @Override
     public String toString() {
 
-        return "Private key of" + super.getName() + " size[" + super.getSize() + "].";
+        return "Clé privée de " + super.getName() + " taille[" + super.getSize() + "].";
     }
 
 
